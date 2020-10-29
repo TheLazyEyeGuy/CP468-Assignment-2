@@ -1,0 +1,15 @@
+
+
+f = open("sudoku", "r")
+text = f
+sudoku = []
+for line in f:
+    nine =line.strip()
+    sudoku.append(nine.split())
+
+
+for i in range(9):
+    for j in range(9):
+        print(sudoku[i][j])
+
+#printsudoku(sudoku)

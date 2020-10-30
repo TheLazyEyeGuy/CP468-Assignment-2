@@ -1,4 +1,4 @@
-
+from functions import printsud
 
 def printsudoku(sudoku):
     boxx = 0
@@ -25,7 +25,5 @@ for line in f:
     nine = line.strip()
     sudoku.append(nine.split())
 
-printsudoku(sudoku)
-
-
+printsud(sudoku)
 

@@ -9,7 +9,7 @@ def printsud(sudoku):
             if boxx == 3:
                 print("|", end=" ")
                 boxx=0
-            print(sudoku[i][j], end=" ")
+            print(sudoku.list[i][j], end=" ")
             boxx+=1
         print()
         boxy+=1

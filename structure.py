@@ -35,8 +35,55 @@ COLUMNLIST = [COLUMN1, COLUMN2, COLUMN3, COLUMN4, COLUMN5, COLUMN6, COLUMN7, COL
 class Sudoku:
 
     def __init__(self, numbers):
-        self.list = numbers
-        self.boxes = BOXLIST
-        self.rows = ROWLIST
-        self.columns = COLUMNLIST
-        self.domains = []  # length of 81, contains the domain for every cell
+        self.list = numbers  # the numbers for the sudoku
+        self.boxes = BOXLIST  # a list containing the boxes of the sudoku with their indexes
+        self.rows = ROWLIST  # a list containing the rows of the sudoku with their indexes
+        self.columns = COLUMNLIST  # a list containing the columns of the sudoku with their indexes
+        self.domains = []  # will be length of 81, contains the domain for every cell
+
+    """
+    print_sud
+    ------------------------------------
+    prints the numbers contained in the sudoku class
+    ------------------------------------
+    self - the sudoku object
+    ____________________________________
+    use: sudoku.printsud()
+    """
+
+    def print_sud(self):
+        boxx = 0
+        boxy = 0
+        for i in range(9):
+            if boxy == 3:
+                print("------+-------+-----")
+                boxy = 0
+            for j in range(9):
+                if boxx == 3:
+                    print("|", end=" ")
+                    boxx = 0
+                print(self.list[i][j], end=" ")
+                boxx += 1
+            print()
+            boxy += 1
+            boxx = 0
+
+    """
+    find_location
+    ------------------------------------
+    finds the box that the index resides in for easier comparisons
+    ------------------------------------
+    indexx = the x index for the location of the number
+    indexy = the y index for the location of the number
+    box = the box that the index resides in
+    ____________________________________
+    use: box = sudoku.find_location(indexx, indexy)
+    """
+
+    def find_location(self,indexx, indexy):
+        box = 0
+        for x in self.boxes:
+            if 9*indexy + indexx in x:
+                #  print(9*indexy + indexx) can alsobe used to find domain index for a given [x][y]
+                box = x
+        return box

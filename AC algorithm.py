@@ -38,13 +38,20 @@ Input:
 """
 function ac3 (sudoku, sudoku.domains, [1,2,3,4,5,6,7,8,9], x != columnx and x != rowx and x != boxx)
      // Initial domains are made consistent with unary constraints.
-     for each x in sudoku
-         sudoku.domains := [1,2,3,4,5,6,7,8,9]
+     for i=0: i+1: i<80
+         sudoku.domains[i] := [1,2,3,4,5,6,7,8,9] # the domain for every square is 1-9
+        
      // 'worklist' contains all arcs we wish to prove consistent or not.
      worklist := { sudoku.number[x] not in COLUMNX AND ROWX AND BOXX}
+     
+     #run through sudoku.list and put every value that isnt 0(nothing) as the domain for that index
+     for i in range(9):
+        for j in range(9):
+            if sudoku.list[i][j] != 0:
+                sudoku.domain[i][j] = sudoku.list[i][j]
 
      do
-         select any arc (x, y) from worklist
+         select any arc (x, y) from worklist  # implement a queue data type? or would a list work as well?
          worklist := worklist - (x, y)
          if arc-reduce (x, sudoku.boxes[x],sudoku.rows[x],sudoku.columns[x])
              if sudoku.domain[x] is empty

@@ -1,17 +1,31 @@
 from structure import Sudoku
+from functools import reduce
 
 f = open("sudoku", "r")
 text = f
 
 numbers = []
 for line in f:
-    nine = line.strip()
-    numbers.append(nine.split())
-f.close()
-sudoku = Sudoku(numbers)
-box = sudoku.find_location(4, 4)
-print(box)
+    numbers.append(line.strip().split())
 
-sudoku.print_sud()
+f.close()
+
+flatNums = reduce(lambda z, y :z + y, numbers)
+
+sudoku = Sudoku(flatNums)
+#sudoku.print_sud()
+
+#sudoku.AC3()
+
+#sudoku.print_sud()
+
+
+"""
+main.py -> Opens file, converts to sudoku object, calls ac3
+AC alg.py -> ac3, arc_reduce, backtrack, select_unassigned, order_domain_value
+sudoku.py -> sudoku_class -> init(self.list, self.domains, self.skimmed, self.contraints, self.poss
+    -> build_constraints, build_possibilities, solved, complete, consistent, assign, unassign, forward_check, 
+    premutate, combine, compare, conflict
+"""
 
 

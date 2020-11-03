@@ -35,40 +35,35 @@ Input:
          }
      return change
 """
-"""
-function ac3 (sudoku, sudoku.domains, [1,2,3,4,5,6,7,8,9], x != columnx and x != rowx and x != boxx)
-     // Initial domains are made consistent with unary constraints.
-     for i=0: i+1: i<80
-         sudoku.domains[i] := [1,2,3,4,5,6,7,8,9] # the domain for every square is 1-9
-        
-     // 'worklist' contains all arcs we wish to prove consistent or not.
-     worklist := { sudoku.number[x] not in COLUMNX AND ROWX AND BOXX}
-     
-     #run through sudoku.list and put every value that isnt 0(nothing) as the domain for that index
-     for i in range(9):
-        for j in range(9):
-            if sudoku.list[i][j] != 0:
-                sudoku.domain[i][j] = sudoku.list[i][j]
 
-     do
-         select any arc (x, y) from worklist  # implement a queue data type? or would a list work as well?
-         worklist := worklist - (x, y)
-         if arc-reduce (x, sudoku.boxes[x],sudoku.rows[x],sudoku.columns[x])
-             if sudoku.domain[x] is empty
-                 return false
-             else
-                 worklist := worklist + { (z, x) | z != y and there exists a relation R2(x, z) or a relation R2(z, x) } #no clue what z would be
-     while worklist not empty
+def ac3(csp, queue = None):
+    if queue is None:
+        queue = [csp.binary_constraints]
 
- function arc-reduce (x, y)
-     bool change = false
-     for each vx in sudoku.domains[x]
-         find a value vy in D(y) such that vx and vy satisfy the constraint R2(x, y)
-         #this should be the checking of every value in the domain to see if it is viable
-         if there is no such vy {
-             D(x) := D(x) - vx
-             change := true
-         }
-     return change
+    while queue:
+        x, y = queue.pop(0)
 
-"""
+        if arc_reduce(csp, x, y):
+            if len(csp.poss[x]) == 0:
+                return False
+
+            for i in csp.related[x]:
+                if i != x:
+                    queue.append((i, x))
+
+    return True
+
+
+def arc_reduce(csp, x, y):
+    change = False
+    i = 0
+    while i < len(csp.poss[x]):
+        for j in csp.poss[y]:
+            if csp.poss[x][i] == j:
+                csp.poss[x].remove(j)
+                change = True
+                i -= 1
+                break
+        i += 1
+
+    return change

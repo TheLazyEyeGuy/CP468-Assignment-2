@@ -11,9 +11,13 @@ for line in f:
 
 f.close()
 
+# Reduce list of numbers using inline lambda function lambda(z, y) = z + y for ever value in numbers
 flatNums = reduce(lambda z, y :z + y, numbers)
 
+# Convert flattened list into a sudoku puzzle
 sudoku = Sudoku(flatNums)
+
+# Run ac3
 if ac3(sudoku):
     if sudoku.solved():  # Check if each domain length is 1, if so puzzle solved using a3 algorithm alone
         print("Puzzle solved, print output: ")
@@ -35,7 +39,7 @@ if ac3(sudoku):
             sudoku.printSol()
         else:
             print("There is no solution for this puzzle")
-else:
+else:  # ac3 failed
     print("The puzzle entered was found to be arc inconsistent with the ac3 algorithm")
 #sudoku.print_sud()
 

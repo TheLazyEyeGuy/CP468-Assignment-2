@@ -1,5 +1,6 @@
 from structure import Sudoku
 from functools import reduce
+from ac3 import ac3, backtrack
 
 f = open("sudoku", "r")
 text = f
@@ -13,6 +14,29 @@ f.close()
 flatNums = reduce(lambda z, y :z + y, numbers)
 
 sudoku = Sudoku(flatNums)
+if ac3(sudoku):
+    if sudoku.solved():  # Check if each domain length is 1, if so puzzle solved using a3 algorithm alone
+        print("Puzzle solved, print output: ")
+        sudoku.printSol()
+    else:
+        assignment = {}
+
+        for i in sudoku.cells:
+            if len(sudoku.poss[i]) == 1:
+                assignment[i] = sudoku.poss[i][0]  # If we found cell value already, assign it
+
+            assignment = backtrack(assignment, sudoku)  # Use backtrack alg on ac3 reduced domain space
+
+        for i in sudoku.poss:
+            sudoku.poss[i] = assignment[i] if len(i) > 1 else sudoku.poss[i]
+
+        if assignment:
+            print("Solution has been found using backtracking algorithm: ")
+            sudoku.printSol()
+        else:
+            print("There is no solution for this puzzle")
+else:
+    print("The puzzle entered was found to be arc inconsistent with the ac3 algorithm")
 #sudoku.print_sud()
 
 #sudoku.AC3()

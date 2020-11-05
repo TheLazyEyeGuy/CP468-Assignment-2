@@ -22,7 +22,7 @@ class Sudoku:
     """
     def __init__(self, numbers):
         self.board = numbers
-        self.cells = self.createCells(colChars, rowChars)
+        self.cells = self.create_cells(colChars, rowChars)
 
         # For each cell set domain to 1-9 if not filled in, else set domain to current integer inside cell
         self.poss = {a: list(range(1,10)) if numbers[i] == '0' else [int(numbers[i])] for i, a in enumerate(self.cells)}
@@ -33,29 +33,29 @@ class Sudoku:
 
         # List of binary contraints, same as work list from pseudo code
         self.binary = []
-        self.createBiConstraints()
+        self.create_bi_constraints()
 
         # Dictionary of related cells (Neighbors)
         self.relCells = {}
-        self.createRelCells()
+        self.create_rel_cells()
 
     """
-    createBiContraints
+    create_bi_constraints
     -----------------------------------------
     Creates list of all binaryContraints (work list)
     -----------------------------------------
     Use:
-        self.createBiContraints()
+        self.create_bi_constraints()
     """
-    def createBiConstraints(self):
+    def create_bi_constraints(self):
         # Create list of all squares in puzzle
-        relatedRows = [self.createCells(colChars, i) for i in rowChars]  # All related rows (A1, B1... I1), (A2, B2...)
-        relatedCols = [self.createCells(j, rowChars) for j in colChars]  # All related cols (A1, A2, ...A9), (B1...B9)
+        relatedRows = [self.create_cells(colChars, i) for i in rowChars]  # All related rows (A1, B1... I1), (A2, B2...)
+        relatedCols = [self.create_cells(j, rowChars) for j in colChars]  # All related cols (A1, A2, ...A9), (B1...B9)
         # All related Boxes (A1, A2, A3, B1, B2, B3, C1, C2, C3), (A4, A5, A6, B4, ..., C6), ...
-        relatedBoxes = [self.createCells(j, i) for j in ('ABC', 'DEF', 'GHI') for i in ('123', '456', '789')]
+        relatedBoxes = [self.create_cells(j, i) for j in ('ABC', 'DEF', 'GHI') for i in ('123', '456', '789')]
 
         squares = (relatedRows + relatedCols + relatedBoxes)
-        #iterate through list of boxes
+        #iterate through list of squares
         for square in squares:
             # List of permutations in square aka: a list of arcs
             combos = self.permutate(square)  # Create all permutations of a square
@@ -65,7 +65,7 @@ class Sudoku:
                     self.binary.append([combo[0], combo[1]])
 
     """
-    createRelCells
+    create_rel_cells
     ------------------------------------------------
     Sets up self.relCells
     ------------------------------------------------
@@ -74,9 +74,9 @@ class Sudoku:
     Edits self.relCells to create list of related cells aka neighbors
     ------------------------------------------------
     Use:
-        self.createRelCells()
+        self.create_rel_cells()
     """
-    def createRelCells(self):
+    def create_rel_cells(self):
         for i in self.cells:
             self.relCells[i] = []  # Set dict at key i to blank list, used to create list of related cells
             for j in self.binary:
@@ -168,7 +168,7 @@ class Sudoku:
     def assign(self, var, val, assignment):
         assignment[var] = val  # assign cell the value
 
-        self.forwardCheck(var, val, assignment)  # Do forward check to see if there are new conflicts
+        self.forward_check(var, val, assignment)  # Do forward check to see if there are new conflicts
 
 
     """
@@ -193,7 +193,7 @@ class Sudoku:
             del assignment[var]  # Delete var key from assignment dict
 
     """
-    forwardCheck
+    forward_check
     ----------------------------------------------
     Does forward checking technique, looks through all cells related
     to given cell var, checks if those cells have been assigned yet. If not
@@ -206,9 +206,9 @@ class Sudoku:
     assignment - dict of assigned cells used to backtracking alg
     ----------------------------------------------
     Use:
-        self.forwardCheck(var, val, assignment)
+        self.forward_check(var, val, assignment)
     """
-    def forwardCheck(self, var, val, assignment):
+    def forward_check(self, var, val, assignment):
 
         for i in self.relCells[var]:  # Loop through all cells related to var
             if i not in assignment:  # if cell i not yet assigned
@@ -217,15 +217,15 @@ class Sudoku:
                     self.skim[var].append((i, val))  # Append to list of domain changes caused by assignment of var
 
     """
-    printSol
+    print_sol
     ------------------------------------
     Prints the domains in self.poss in the format of a sudoku board
     ------------------------------------
     self - the sudoku object
     ____________________________________
-    use: sudoku.printSol()
+    use: sudoku.print_sol()
     """
-    def printSol(self):
+    def print_sol(self):
         count = 1
         print("-----------------------")
         print("|", end="")
@@ -243,15 +243,15 @@ class Sudoku:
             count += 1
 
     """
-    printSud
+    print_sud
     ------------------------------------
     Prints the sudoku puzzle from the list in self.board()
     ------------------------------------
     self - the sudoku object
     ____________________________________
-    use: sudoku.printSud()
+    use: sudoku.print_sud()
     """
-    def printSud(self):
+    def print_sud(self):
         count = 1
         print("-----------------------")
         print("|", end="")
@@ -269,7 +269,7 @@ class Sudoku:
             count += 1
 
     """
-    createCells
+    create_cells
     ------------------------------------------
     Creates list of cell coordinates for sudoku board
     ------------------------------------------
@@ -279,10 +279,10 @@ class Sudoku:
     cells - List of all cell ID's A1, A2, ..., I8, I9
     ------------------------------------------
     Use:
-        self.cells = self.createCells(chars, nums)
+        self.cells = self.create_cells(chars, nums)
     """
     @staticmethod  # Static methods do not use or change self directly, do not pass in self
-    def createCells(chars, nums):
+    def create_cells(chars, nums):
         cells = []
         for a in chars:
             for b in nums:
@@ -356,5 +356,3 @@ class Sudoku:
                 count += 1
 
         return count
-
-

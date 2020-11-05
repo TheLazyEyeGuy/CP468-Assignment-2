@@ -97,7 +97,7 @@ def arc_reduce(sudoku, x, y):
 
 
 """
-backtrack
+back_track
 ------------------------------------------------
 Backtracking alg for when ac3 fails to solve the puzzle and each
 cell has a domain > 0. Recursive.
@@ -109,16 +109,16 @@ sudoku - Sudoku puzzle object after running through ac3 successfully
 ------------------------------------------------
 result - Returns the finished puzzle
 """
-def backtrack(assignment, sudoku):
+def back_track(assignment, sudoku):
     if len(assignment) == len(sudoku.cells):  # The len of backtrack puzzle == # of cells means we are done BASE CASE
         return assignment
 
-    v = selUnassignedVar(assignment, sudoku)  # Find unassigned variable
+    v = sel_unassigned_var(assignment, sudoku)  # Find unassigned variable
 
-    for value in orderDomainValues(sudoku, v):  # For each value in the domain of cellID v
+    for value in order_domain_values(sudoku, v):  # For each value in the domain of cellID v
         if sudoku.consistent(assignment, v, value):  # Check if value is consistent
             sudoku.assign(v, value, assignment)  # If consistent assign cell v to value
-            result = backtrack(assignment, sudoku)  # Recurse algorithm, len(assignment) had increase by 1
+            result = back_track(assignment, sudoku)  # Recurse algorithm, len(assignment) had increase by 1
             if result:  # Unloads all recursions with value of final assignment
                 return result
 
@@ -129,7 +129,7 @@ def backtrack(assignment, sudoku):
 
 
 """
-selUnassignedVar
+sel_unassigned_var
 ---------------------------------------------------
 Selects a cell/variable from sudoku that hasnt been assigned a value in assignment dict
 ---------------------------------------------------
@@ -138,7 +138,7 @@ sudoku - Sudoku object we are working with
 ---------------------------------------------------
 Returns unassigned cell with least/minimum number of neighbors using lambda function
 """
-def selUnassignedVar(assignment, sudoku):
+def sel_unassigned_var(assignment, sudoku):
     unassigned = [i for i in sudoku.cells if i not in assignment]  # All cells i that are not in assignment
     return min(unassigned, key=lambda v: len(sudoku.poss[v]))  # Min cell (aka cell with smallest domain)
 
@@ -152,7 +152,7 @@ all above return does is sort the pick the item in unassigned with the fewest ne
 """
 
 """
-orderDomainValues
+order_domain_values
 ---------------------------------------------------
 Sorts values in the domain of cellID v based on number of conflicts presented by each domain value
 ---------------------------------------------------
@@ -161,7 +161,7 @@ v - Variable containing cell ID
 ---------------------------------------------------
 return domain of v sorted with lambda function based on # of conflicts
 """
-def orderDomainValues(sudoku, v):
+def order_domain_values(sudoku, v):
     if len(sudoku.poss[v]) == 1:
         return sudoku.poss[v]
 

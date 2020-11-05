@@ -16,7 +16,8 @@ flatNums = reduce(lambda z, y :z + y, numbers)
 
 # Convert flattened list into a sudoku puzzle
 sudoku = Sudoku(flatNums)
-
+print("ORIGINAL: ")
+sudoku.printSud()
 # Run ac3
 if ac3(sudoku):
     if sudoku.solved():  # Check if each domain length is 1, if so puzzle solved using a3 algorithm alone

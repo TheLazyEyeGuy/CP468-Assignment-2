@@ -243,6 +243,32 @@ class Sudoku:
             count += 1
 
     """
+    printSud
+    ------------------------------------
+    Prints the sudoku puzzle from the list in self.board()
+    ------------------------------------
+    self - the sudoku object
+    ____________________________________
+    use: sudoku.printSud()
+    """
+    def printSud(self):
+        count = 1
+        print("-----------------------")
+        print("|", end="")
+        for i in self.board:
+            if count % 3 == 0:  # Every 3 values add | to separate boxes
+                print(i, end=" | ")
+            else:
+                print(i, end=" ")
+            if count % 9 == 0:  # Every 9 values make a new line to rep the next row
+                print("")
+                if count % 27 == 0:
+                    print("-----------------------")  # Every 27 values add lines to rep bottom of a box
+                if count % 81 != 0:  # Exists to avoid printing an extra | in the last loop
+                    print("|", end="")
+            count += 1
+
+    """
     createCells
     ------------------------------------------
     Creates list of cell coordinates for sudoku board

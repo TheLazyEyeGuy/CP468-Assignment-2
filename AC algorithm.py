@@ -54,7 +54,7 @@ function ac3 (sudoku, sudoku.domains, [1,2,3,4,5,6,7,8,9], x != columnx and x !=
          select any arc (x, y) from worklist  # implement a queue data type? or would a list work as well?
          worklist := worklist - (x, y)
          if arc-reduce (x, sudoku.boxes[x],sudoku.rows[x],sudoku.columns[x])
-             if sudoku.domain[x] is empty
+             if sudoku.domain[x] is empty  # if this happens the sudoku is invalid, go to next arangement in frontier
                  return false
              else
                  worklist := worklist + { (z, x) | z != y and there exists a relation R2(x, z) or a relation R2(z, x) } #no clue what z would be

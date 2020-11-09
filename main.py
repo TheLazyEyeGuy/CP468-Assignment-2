@@ -5,13 +5,15 @@ text = f
 
 numbers = []
 for line in f:
-    nine = line.strip()
-    numbers.append(nine.split())
+    numbers.append(line.strip().split())
 f.close()
+print(numbers)
+"""
 sudoku = Sudoku(numbers)
+sudoku.print_sud()  # prints sudoku
 box = sudoku.find_location(4, 4)
 print(box)
+"""
 
-sudoku.print_sud()
 
 

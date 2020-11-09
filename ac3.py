@@ -55,8 +55,11 @@ Use:
 """
 def ac3(sudoku):
     workList = sudoku.binary  # Set up the work list queue
+    steps = 0
 
     while workList:
+        print("Step # = ", steps, " Length of Queue = ", len(workList))
+        steps += 1
         x, y = workList.pop(0)  # Pop x and y ID from worklist
 
         if arc_reduce(sudoku, x, y):

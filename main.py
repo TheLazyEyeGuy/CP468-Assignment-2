@@ -21,7 +21,7 @@ sudoku.print_sud()
 # Run ac3
 if ac3(sudoku):
     if sudoku.solved():  # Check if each domain length is 1, if so puzzle solved using a3 algorithm alone
-        print("Puzzle solved, print output: ")
+        print("Puzzle solved using AC3, print output: ")
         sudoku.print_sol()
     else:
         assignment = {}
@@ -52,7 +52,7 @@ else:  # ac3 failed
 """
 main.py -> Opens file, converts to sudoku object, calls ac3
 AC alg.py -> ac3, arc_reduce, backtrack, select_unassigned, order_domain_value
-sudoku.py -> sudoku_class -> init(self.list, self.domains, self.skimmed, self.contraints, self.poss
+sudoku.py -> sudoku_class -> init(self.list, self.domains, self.skimmed, self.contraints, self.poss)
     -> build_constraints, build_possibilities, solved, complete, consistent, assign, unassign, forward_check, 
-    premutate, combine, compare, conflict
+    permutate, combine, compare, conflict
 """

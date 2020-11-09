@@ -57,6 +57,7 @@ def ac3(sudoku):
     workList = sudoku.binary  # Set up the work list queue
 
     while workList:
+        print(len(workList))
         x, y = workList.pop(0)  # Pop x and y ID from worklist
 
         if arc_reduce(sudoku, x, y):
